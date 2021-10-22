@@ -15,6 +15,7 @@ Plug 'yggdroot/indentline'
 Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 
 syntax on
