@@ -16,13 +16,17 @@ Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'dense-analysis/ale'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 syntax on
 set relativenumber
 set ignorecase
 set cursorline
-colorscheme onedark
+" colorscheme onedark
+autocmd vimenter * ++nested colorscheme gruvbox
 set list
 set listchars=tab:\|·,trail:·
 set cmdheight=2
