@@ -1,3 +1,5 @@
 [user]
 	email = chin.sy.des@gmail.com
 	name = Desmond Chin
+[core]
+	editor = nvim
