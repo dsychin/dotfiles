@@ -16,13 +16,17 @@ Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'morhetz/gruvbox'
 call plug#end()
+
+let g:coc_global_extensions=[ 'coc-json', 'coc-html', 'coc-css', '@yaegassy/coc-nginx', 'coc-sh', 'coc-sql', 'coc-tsserver' ]
 
 syntax on
 set relativenumber
 set ignorecase
 set cursorline
-colorscheme onedark
+" colorscheme onedark
+autocmd vimenter * ++nested colorscheme gruvbox
 set list
 set listchars=tab:\|·,trail:·
 set cmdheight=2
