@@ -19,6 +19,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': 
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'dense-analysis/ale'
 Plug 'morhetz/gruvbox'
+Plug 'sunaku/tmux-navigate'
 call plug#end()
 
 let g:coc_global_extensions=[ 'coc-json', 'coc-html', 'coc-css', '@yaegassy/coc-nginx', 'coc-sh', 'coc-sql', 'coc-tsserver' ]
