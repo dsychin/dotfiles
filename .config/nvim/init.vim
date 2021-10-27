@@ -17,6 +17,7 @@ Plug 'majutsushi/tagbar'
 Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'morhetz/gruvbox'
+Plug 'sunaku/tmux-navigate'
 call plug#end()
 
 let g:coc_global_extensions=[ 'coc-json', 'coc-html', 'coc-css', '@yaegassy/coc-nginx', 'coc-sh', 'coc-sql', 'coc-tsserver' ]
