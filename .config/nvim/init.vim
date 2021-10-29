@@ -8,6 +8,7 @@ Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'ThePrimeagen/git-worktree.nvim'
 
 " search and navigation
 Plug 'kien/ctrlp.vim'
@@ -24,7 +25,6 @@ Plug 'yggdroot/indentline'
 Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-Plug 'sheerun/vim-polyglot'
 
 " theme
 Plug 'morhetz/gruvbox'
