@@ -1,23 +1,34 @@
 call plug#begin()
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'vim-airline/vim-airline'
-Plug 'joshdick/onedark.vim'
-Plug 'preservim/nerdtree'
-Plug 'airblade/vim-gitgutter'
+" start screen
 Plug 'mhinz/vim-startify'
+
+" git
+Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'
-Plug 'ryanoasis/vim-devicons'
+
+" search and navigation
 Plug 'kien/ctrlp.vim'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'sunaku/tmux-navigate'
+
+" status line
+Plug 'vim-airline/vim-airline'
+
+" code editing and appearance
 Plug 'editorconfig/editorconfig-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'yggdroot/indentline'
 Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
-Plug 'cespare/vim-toml', { 'branch': 'main' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" theme
 Plug 'morhetz/gruvbox'
-Plug 'sunaku/tmux-navigate'
+
+" to be replaced with nvim lsp
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 call plug#end()
 
 let g:coc_global_extensions=[ 'coc-json', 'coc-html', 'coc-css', '@yaegassy/coc-nginx', 'coc-sh', 'coc-sql', 'coc-tsserver' ]
@@ -26,7 +37,6 @@ syntax on
 set relativenumber
 set ignorecase
 set cursorline
-" colorscheme onedark
 autocmd vimenter * ++nested colorscheme gruvbox
 set list
 set listchars=tab:\|·,trail:·
