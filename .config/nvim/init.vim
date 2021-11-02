@@ -31,11 +31,11 @@ Plug 'morhetz/gruvbox'
 " neovim lsp
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-cmdline'
 Plug 'ray-x/go.nvim'
 Plug 'mfussenegger/nvim-dap'
 " TODO: learn how to use nvim DAP for debugging
@@ -99,20 +99,20 @@ lua << EOF
   })
 
   -- Use buffer source for `/`.
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+  -- cmp.setup.cmdline('/', {
+  --   sources = {
+  --     { name = 'buffer' }
+  --   }
+  -- })
 
   -- Use cmdline & path source for ':'.
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+  -- cmp.setup.cmdline(':', {
+  --   sources = cmp.config.sources({
+  --     { name = 'path' }
+  --   }, {
+  --     { name = 'cmdline' }
+  --   })
+  -- })
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
