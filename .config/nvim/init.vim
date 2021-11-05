@@ -159,6 +159,10 @@ for _, lsp in ipairs(servers) do
   }
 end
 
+require'lspconfig'.html.setup {
+  filetypes = { "html", "gohtml" }
+}
+
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
@@ -188,7 +192,21 @@ set cmdheight=2
 set updatetime=300
 set completeopt=menu,menuone,noselect
 
-autocmd BufNewFile,BufRead *.gohtml set filetype=gohtmltmpl
+set clipboard+=unnamedplus
+let g:clipboard = {
+          \   'name': 'win32yank-wsl',
+          \   'copy': {
+          \      '+': 'win32yank.exe -i --crlf',
+          \      '*': 'win32yank.exe -i --crlf',
+          \    },
+          \   'paste': {
+          \      '+': 'win32yank.exe -o --lf',
+          \      '*': 'win32yank.exe -o --lf',
+          \   },
+          \   'cache_enabled': 0,
+	  \ }
+
+autocmd BufNewFile,BufRead *.gohtml set filetype=html
 
 let g:fugitive_gitlab_domains = ['https://gitlab.edocode.co.jp']
 let delimitMate_expand_cr=1
