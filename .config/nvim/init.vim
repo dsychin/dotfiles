@@ -212,4 +212,4 @@ let g:fugitive_gitlab_domains = ['https://gitlab.edocode.co.jp']
 let delimitMate_expand_cr=1
 
 nmap <F8> :TagbarToggle<CR>
-
+nnoremap tn <cmd>tabnew<cr>
