@@ -10,8 +10,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'ThePrimeagen/git-worktree.nvim'
 
 " search and navigation
-Plug 'kien/ctrlp.vim'
-Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sunaku/tmux-navigate'
 
@@ -39,6 +37,10 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'ray-x/go.nvim'
 Plug 'mfussenegger/nvim-dap'
 " TODO: learn how to use nvim DAP for debugging
+
+" Telescope
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
 " lua configs
@@ -159,9 +161,13 @@ for _, lsp in ipairs(servers) do
   }
 end
 
-require'lspconfig'.html.setup {
-  filetypes = { "html", "gohtml" }
-}
+ require'lspconfig'.html.setup {
+   on_attach = on_attach,
+   filetypes = { "html", "gohtml" },
+    flags = {
+      debounce_text_changes = 150,
+    }
+ }
 
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -213,3 +219,8 @@ let delimitMate_expand_cr=1
 
 nmap <F8> :TagbarToggle<CR>
 nnoremap tn <cmd>tabnew<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <leader>fs <cmd>lua require('telescope.builtin').document_symbols()<cr>
