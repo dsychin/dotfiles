@@ -17,9 +17,21 @@ alias la='ls -lA'
 alias config='/usr/bin/git --git-dir=/home/desmond/.cfg/ --work-tree=/home/desmond'
 
 # Environment variables
+export TERMINAL=alacritty
+export EDITOR=nvim
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+export DATABASE_URL=mysql://root@127.0.0.1:3306/pushcode3 # diesel migration
+export DB_HOST=localhost # goper db host
 
 # Autocomplete
 source /usr/share/git/completion/git-completion.bash
 source /usr/share/bash-completion/bash_completion
+
+# enable ssh agent forwarding
+if [ -z "$SSH_AUTH_SOCK" ] ; then
+    eval `ssh-agent -s`
+    ssh-add
+fi
+set -o vi

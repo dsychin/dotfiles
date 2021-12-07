@@ -22,6 +22,8 @@ Plug 'yggdroot/indentline'
 Plug 'raimondi/delimitmate'
 Plug 'majutsushi/tagbar'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'numToStr/Comment.nvim'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 " theme
 Plug 'morhetz/gruvbox'
@@ -31,12 +33,13 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-buffer'
 " Plug 'hrsh7th/cmp-path'
 " Plug 'hrsh7th/cmp-cmdline'
 Plug 'ray-x/go.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'mfussenegger/nvim-dap'
-" TODO: learn how to use nvim DAP for debugging
+Plug 'rcarriga/nvim-dap-ui'
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -128,6 +131,9 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
 
+  -- signature suggestion
+  require "lsp_signature".on_attach()
+
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -151,7 +157,7 @@ end
 local nvim_lsp = require('lspconfig')
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'gopls', 'tsserver' }
+local servers = { 'gopls', 'tsserver', 'cssls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -184,38 +190,48 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-require 'go'.setup()
+-- go debug adapter configuration
+local dap = require('dap')
+dap.adapters.go = {
+  type = 'executable';
+  command = 'node';
+  args = {os.getenv('HOME') .. '/vscode-go/dist/debugAdapter.js'};
+}
+dap.configurations.go = {
+  {
+    type = 'go';
+    name = 'Debug';
+    request = 'launch';
+    showLog = false;
+    program = "${file}";
+    dlvToolPath = vim.fn.exepath(os.getenv('HOME') .. '/go/bin/dlv')
+  },
+}
+
+require'go'.setup()
+require'Comment'.setup()
+require'dapui'.setup()
 EOF
 
 syntax on
 set relativenumber
 set ignorecase
 set cursorline
+set termguicolors
 autocmd vimenter * ++nested colorscheme gruvbox
 set list
 set listchars=tab:\|·,trail:·
 set cmdheight=2
 set updatetime=300
 set completeopt=menu,menuone,noselect
-
-set clipboard+=unnamedplus
-let g:clipboard = {
-          \   'name': 'win32yank-wsl',
-          \   'copy': {
-          \      '+': 'win32yank.exe -i --crlf',
-          \      '*': 'win32yank.exe -i --crlf',
-          \    },
-          \   'paste': {
-          \      '+': 'win32yank.exe -o --lf',
-          \      '*': 'win32yank.exe -o --lf',
-          \   },
-          \   'cache_enabled': 0,
-	  \ }
+set undofile
 
 autocmd BufNewFile,BufRead *.gohtml set filetype=html
 
 let g:fugitive_gitlab_domains = ['https://gitlab.edocode.co.jp']
 let delimitMate_expand_cr=1
+let g:Hexokinase_highlighters = [ 'backgroundfull' ]
+let g:Hexokinase_ftEnabled = ['css', 'html', 'javascript', 'gohtml']
 
 nmap <F8> :TagbarToggle<CR>
 nnoremap tn <cmd>tabnew<cr>
@@ -223,4 +239,14 @@ nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-nnoremap <leader>fs <cmd>lua require('telescope.builtin').document_symbols()<cr>
+nnoremap <leader>fs <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
+nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
+nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>lp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+
