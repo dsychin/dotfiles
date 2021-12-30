@@ -14,7 +14,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'sunaku/tmux-navigate'
 
 " status line
-Plug 'vim-airline/vim-airline'
+Plug 'nvim-lualine/lualine.nvim'
 
 " code editing and appearance
 Plug 'editorconfig/editorconfig-vim'
@@ -44,6 +44,9 @@ Plug 'rcarriga/nvim-dap-ui'
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
+" tmux restore
+Plug 'tpope/vim-obsession'
 call plug#end()
 
 " lua configs
@@ -211,6 +214,7 @@ dap.configurations.go = {
 require'go'.setup()
 require'Comment'.setup()
 require'dapui'.setup()
+require'lualine'.setup()
 EOF
 
 syntax on

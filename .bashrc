@@ -35,3 +35,5 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
     ssh-add
 fi
 set -o vi
+
+[[ -s "/home/desmond/.gvm/scripts/gvm" ]] && source "/home/desmond/.gvm/scripts/gvm"
