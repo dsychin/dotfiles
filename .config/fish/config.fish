@@ -11,10 +11,7 @@ set -x DATABASE_URL mysql://root@127.0.0.1:3306/pushcode3 # diesel migration
 set -x DB_HOST localhost # goper db host
 
 # fix ssh agent forwarding on WSL
-bash -c '
-    if [ -z "$SSH_AUTH_SOCK" ] ; then
-        eval `ssh-agent -s`
-        ssh-add
-    fi'
+fish_ssh_agent
 
 set -U fish_greeting "🐟"
+set -U nvm_default_version lts/gallium
