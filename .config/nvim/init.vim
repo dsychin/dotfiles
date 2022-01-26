@@ -7,11 +7,14 @@ Plug 'mhinz/vim-startify'
 " git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'shumphrey/fugitive-gitlab.vim'
 Plug 'ThePrimeagen/git-worktree.nvim'
 
 " search and navigation
 Plug 'ryanoasis/vim-devicons'
 Plug 'sunaku/tmux-navigate'
+Plug 'tpope/vim-repeat' " dependency for lightspeed
+Plug 'ggandor/lightspeed.nvim'
 
 " status line
 Plug 'nvim-lualine/lualine.nvim'
@@ -24,6 +27,8 @@ Plug 'majutsushi/tagbar'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'numToStr/Comment.nvim'
 Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
+Plug 'folke/todo-comments.nvim'
+Plug 'AckslD/nvim-neoclip.lua'
 
 " theme
 Plug 'morhetz/gruvbox'
@@ -160,7 +165,7 @@ end
 local nvim_lsp = require('lspconfig')
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'gopls', 'tsserver', 'cssls' }
+local servers = { 'gopls', 'tsserver', 'cssls', 'vimls' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
@@ -215,6 +220,8 @@ require'go'.setup()
 require'Comment'.setup()
 require'dapui'.setup()
 require'lualine'.setup()
+require'todo-comments'.setup()
+require'neoclip'.setup()
 EOF
 
 syntax on
@@ -229,8 +236,11 @@ set cmdheight=2
 set updatetime=300
 set completeopt=menu,menuone,noselect
 set undofile
+set tabstop=4 shiftwidth=4 softtabstop=4 expandtab
 
 autocmd BufNewFile,BufRead *.gohtml set filetype=html
+autocmd BufNewFile,BufRead *.gojs set filetype=javascript
+autocmd FileType go set noexpandtab
 
 let g:fugitive_gitlab_domains = ['https://gitlab.edocode.co.jp']
 let delimitMate_expand_cr=1
@@ -244,6 +254,7 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <leader>fs <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
+nnoremap <leader>td :TodoTelescope<cr>
 nnoremap <silent> <F5> :lua require'dap'.continue()<CR>
 nnoremap <silent> <F10> :lua require'dap'.step_over()<CR>
 nnoremap <silent> <F11> :lua require'dap'.step_into()<CR>
